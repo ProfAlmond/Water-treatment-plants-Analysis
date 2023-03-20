@@ -1,10 +1,10 @@
 # Importing data to R
 library(readxl)
-mydata<-read_excel("C:/Users/User/Desktop/RR data (1).xlsx")
+mydata<-read_excel("RR data (1).xlsx")
 
 #____________________________% removal for individual componet in @ plant__________________________________________ 
 
-# installing and loading libraries
+# installing and loading  the required libraries
 #install.packages("dplyr")
 library(magrittr)
 library(dplyr)
