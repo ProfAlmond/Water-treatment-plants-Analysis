@@ -1,0 +1,156 @@
+---
+title: Occurrence, risk assessment and elimination of chemicals of emerging concerns
+  in wasterwater treatment plants in Western Kenya
+author: "Ali The Analyst"
+date: "2023-03-20"
+output:
+  word_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+```{r cars}
+library(readxl)
+mydata<-read_excel("RR data (1).xlsx")
+```
+
+installing and loading  the required libraries
+
+```{r pressure, echo=FALSE}
+library(magrittr)
+library(dplyr)
+```
+#Nzoia
+Filtering Nzoia_EFF with highest detection of above 200
+```{r}
+Nzoia_EFF<-mydata %>% filter(Nzoia_EFF>=200) %>% select(WWTPs,Nzoia_EFF)
+Nzoia_EFF
+```
+
+filtering Nzoia_INF with highest detection > 200 
+```{r}
+Nzoia<-mydata %>% filter (Nzoia_INF >= 200) %>% 
+  select (Compound_class,WWTPs,Nzoia_INF,Nzoia_EFF)
+Nzoia
+```
+
+Percentage removal of each chemical compound present in Nzoai with an influent value greater than 200
+```{r}
+per_removal<- ((Nzoia$Nzoia_INF - Nzoia$Nzoia_EFF)/ Nzoia$Nzoia_INF) * 100
+per_removal_perchem<- data.frame(Nzoia$WWTPs,per_removal)
+library(knitr)
+knitr::kable(per_removal_perchem)
+```
+
+The Average concentration & STD concentration for each compound Class in Nzoia
+```{r}
+Nzoia_Summary<-Nzoia %>% group_by(Compound_class) %>% 
+  summarise(average_INF = mean(Nzoia_INF), 
+            std_INF = sd(Nzoia_INF),
+            average_EFF = mean(Nzoia_EFF),
+            std_EFF = sd(Nzoia_EFF))
+knitr::kable(Nzoia_Summary)
+```
+
+Removal Efficiency for each compound class in Nzoia
+```{r}
+Nzoia_Efficiency<- Nzoia %>% group_by(Compound_class) %>%
+  summarise(percentage_Efficiency = ((sum(Nzoia_INF)-sum(Nzoia_EFF))/sum(Nzoia_INF)) * 100)
+knitr::kable(Nzoia_Efficiency)
+```
+
+#DLK
+Filtering out the chemical compounds with influent values greater than 200
+```{r}
+DLK<-mydata %>% filter (DLK_INF >= 200) %>% select (Compound_class,WWTPs,DLK_INF,DLK_EFF)
+DLK
+```
+
+Removal efficiency for each chemical componet in DLK
+```{r}
+percentage_removal<- ((DLK$DLK_INF - DLK$DLK_EFF)/ DLK$DLK_INF) * 100
+per_removal_perchem<- data.frame(DLK,percentage_removal)
+knitr::kable(per_removal_perchem)
+```
+
+ Average concentration & STD concentration for each compound Class in DLK
+```{r}
+DLK_Summary<-DLK %>% group_by(Compound_class) %>% 
+  summarise(average_INF = mean(DLK_INF), 
+            std_INF = sd(DLK_INF),
+            average_EFF = mean(DLK_EFF),
+            std_EFF = sd(DLK_EFF))
+knitr::kable(DLK_Summary)
+```
+ 
+Removal efficiency for each compound class in DLK
+```{r}
+DLK_Efficiency<- DLK %>% group_by(Compound_class) %>%
+  summarise(percentage_Efficiency = ((sum(DLK_INF)-sum(DLK_EFF))/sum(DLK_INF)) * 100)
+knitr::kable(DLK_Efficiency)
+
+```
+
+#Moi
+filtering the chemical substances with an influent value greater than 200
+```{r}
+Moi<-mydata %>% filter (Moi_INF >= 200) %>% select (Compound_class,WWTPs,Moi_INF,Moi_EFF)
+Moi
+```
+removal efficiency for each chemical subtance in Moi
+```{r}
+percentage_removal<- ((Moi$Moi_INF - Moi$Moi_EFF)/ Moi$Moi_INF) * 100
+per_removal_perchem<- data.frame(Moi$WWTPs,percentage_removal)
+knitr::kable(per_removal_perchem)
+```
+
+Average concentration & STD concentration for every compound Class in Moi
+```{r}
+Moi_Summary<-Moi %>% group_by(Compound_class) %>% 
+  summarise(average_INF = mean(Moi_INF), 
+            std_INF = sd(Moi_INF),
+            average_EFF = mean(Moi_EFF),
+            std_EFF = sd(Moi_EFF))
+knitr::kable(Moi_Summary)
+```
+
+Removal efficiency for each compound class in Moi
+```{r}
+Moi_Efficiency<- Moi %>% group_by(Compound_class) %>%
+  summarise(percentage_Efficiency = ((sum(Moi_INF)-sum(Moi_EFF))/sum(Moi_INF)) * 100)
+knitr::kable(Moi_Efficiency)
+```
+
+#Eldo
+filtering the chemical substances with an influent value greater than 200
+```{r}
+Eldo<-mydata %>% filter (Eldo_INF >= 200) %>% select (Compound_class,WWTPs,Eldo_INF,Eldo_EFF)
+```
+Removal efficiency for every chemical substance  in Eldo
+```{r}
+percentage_removal<- ((Eldo$Eldo_INF - Eldo$Eldo_EFF)/ Eldo$Eldo_INF) * 100
+per_removal_perchem<- data.frame(Eldo$WWTPs,percentage_removal)
+knitr::kable(per_removal_perchem)
+```
+
+ Average concentration & STD concentration for each compound Class in Eldo
+```{r}
+Eldo_Summary<-Eldo %>% group_by(Compound_class) %>% 
+  summarise(average_INF = mean(Eldo_INF), 
+            std_INF = sd(Eldo_INF),
+            average_EFF = mean(Eldo_EFF),
+            std_EFF = sd(Eldo_EFF))
+knitr::kable(Eldo_Summary)
+```
+ 
+ Removal efficiency for each compound class in DLK
+```{r}
+Eldo_Efficiency<- Eldo %>% group_by(Compound_class) %>%
+  summarise(percentage_Efficiency = ((sum(Eldo_INF)-sum(Eldo_EFF))/sum(Eldo_INF)) * 100)
+knitr::kable(Eldo_Efficiency)
+```
+ 
