@@ -22,7 +22,7 @@ Nzoia
 
 # % removal for @ chemical in Nzoia
 per_removal<- ((Nzoia$Nzoia_INF - Nzoia$Nzoia_EFF)/ Nzoia$Nzoia_INF) * 100
-per_removal_perchem<- data.frame(Nzoia$Compound_class,Nzoia$WWTPs,Nzoia$Nzoia_INF,Nzoia$Nzoia_EFF, per_removal)
+per_removal_perchem<- data.frame(Nzoia$WWTPs,per_removal)
 library(knitr)
 knitr::kable(per_removal_perchem)
 
@@ -37,7 +37,7 @@ knitr::kable(Nzoia_Summary)
 #% removal Efficiency for @ compound class in Nzoia
 Nzoia_Efficiency<- Nzoia %>% group_by(Compound_class) %>%
   summarise(percentage_Efficiency = ((sum(Nzoia_INF)-sum(Nzoia_EFF))/sum(Nzoia_INF)) * 100)
-  knitr::kable(Nzoia_Efficiency)
+knitr::kable(Nzoia_Efficiency)
 
 
 #DLK
@@ -45,7 +45,7 @@ DLK<-mydata %>% filter (DLK_INF >= 200) %>% select (Compound_class,WWTPs,DLK_INF
 DLK
 #% Removal for DLK
 percentage_removal<- ((DLK$DLK_INF - DLK$DLK_EFF)/ DLK$DLK_INF) * 100
-per_removal_perchem<- data.frame(DLK$WWTPs,percentage_removal)
+per_removal_perchem<- data.frame(DLK,percentage_removal)
 knitr::kable(per_removal_perchem)
 
 
@@ -69,6 +69,8 @@ percentage_removal<- ((Moi$Moi_INF - Moi$Moi_EFF)/ Moi$Moi_INF) * 100
 per_removal_perchem<- data.frame(Moi$WWTPs,percentage_removal)
 knitr::kable(per_removal_perchem)
 
+
+
 # Average concentration & STD concentration for @ compound Class in Moi
 Moi_Summary<-Moi %>% group_by(Compound_class) %>% 
   summarise(average_INF = mean(Moi_INF), 
@@ -77,7 +79,7 @@ Moi_Summary<-Moi %>% group_by(Compound_class) %>%
             std_EFF = sd(Moi_EFF))
 knitr::kable(Moi_Summary)
 
-#% removal efficiency for @ compound class in DLK
+#% removal efficiency for @ compound class in Moi
 Moi_Efficiency<- Moi %>% group_by(Compound_class) %>%
   summarise(percentage_Efficiency = ((sum(Moi_INF)-sum(Moi_EFF))/sum(Moi_INF)) * 100)
 knitr::kable(Moi_Efficiency)
@@ -101,3 +103,4 @@ knitr::kable(Eldo_Summary)
 Eldo_Efficiency<- Eldo %>% group_by(Compound_class) %>%
   summarise(percentage_Efficiency = ((sum(Eldo_INF)-sum(Eldo_EFF))/sum(Eldo_INF)) * 100)
 knitr::kable(Eldo_Efficiency)
+
